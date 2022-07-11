@@ -113,6 +113,7 @@ export default function Prism({ name }) {
     key: new PluginKey("prism"),
     state: {
       init: (_: Plugin, { doc }) => {
+        highlighted = false;
         return DecorationSet.create(doc, []);
       },
       apply: (transaction: Transaction, decorationSet, oldState, state) => {
@@ -137,6 +138,8 @@ export default function Prism({ name }) {
         // it render un-highlighted and then trigger a defered render of Prism
         // by updating the plugins metadata
         setTimeout(() => {
+          if (highlighted) { return; }
+
           view.dispatch(view.state.tr.setMeta("prism", { loaded: true }));
         }, 10);
       }

@@ -45,7 +45,13 @@ class ToolbarMenu extends React.Component<Props> {
               active={isActive}
             >
               <Tooltip tooltip={item.tooltip} placement="top">
-                <Icon color={this.props.theme.toolbarItem} />
+                <Icon
+                  color={
+                    isActive
+                      ? this.props.theme.toolbarItemSelected
+                      : this.props.theme.toolbarItem
+                  }
+                />
               </Tooltip>
             </ToolbarButton>
           );

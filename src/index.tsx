@@ -126,7 +126,7 @@ export type Props = {
   dictionary?: Partial<typeof baseDictionary>;
   dark?: boolean;
   dir?: string;
-  theme?: typeof theme;
+  colorTheme?: typeof theme;
   template?: boolean;
   headingsOffset?: number;
   maxLength?: number;
@@ -720,7 +720,9 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
   };
 
   theme = () => {
-    return this.props.theme || (this.props.dark ? darkTheme : lightTheme);
+    const baseTheme = this.props.dark ? darkTheme : lightTheme;
+
+    return { ...baseTheme, ...this.props.colorTheme };
   };
 
   dictionary = memoize(
