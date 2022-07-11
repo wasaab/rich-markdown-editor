@@ -1,13 +1,12 @@
 import * as React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import styled, { withTheme } from "styled-components";
-import theme from "../styles/theme";
 
 export type Props = {
   selected: boolean;
   disabled?: boolean;
   onClick: () => void;
-  theme: typeof theme;
+  theme: Record<string, string>;
   icon?: typeof React.Component | React.FC<any>;
   title: React.ReactNode;
   shortcut?: string;
@@ -22,6 +21,7 @@ function BlockMenuItem({
   shortcut,
   icon,
   containerId = "block-menu-container",
+  theme,
 }: Props) {
   const Icon = icon;
 
@@ -60,7 +60,13 @@ function BlockMenuItem({
         </>
       )}
       {title}
-      {shortcut && <Shortcut>{shortcut}</Shortcut>}
+      {shortcut && (
+        <Shortcut>
+          {shortcut.split(" ").map(key => (
+            <kbd key={key}>{key}</kbd>
+          ))}
+        </Shortcut>
+      )}
     </MenuItem>
   );
 }
@@ -93,7 +99,8 @@ const MenuItem = styled.button<{
 
   &:hover,
   &:active {
-    color: ${props => props.theme.blockToolbarTextSelected};
+    color: ${props =>
+      props.selected ? undefined : props.theme.blockToolbarHoverText};
     background: ${props =>
       props.selected
         ? props.theme.blockToolbarSelectedBackground ||
