@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Editor prop theme -> colorTheme to avoid conflict with mui theme prop
 - colorTheme extends default theme instead of replacing
-- Editor 12px wider
+- CommandMenu 12px wider
 - BlockMenuItem does not change color on hover if selected
 - ToolbarMenu shows different color text for selected items
 - Command hotkeys wrapped with kbd
