@@ -47,7 +47,7 @@ export default class ComponentView {
 
   renderElement() {
     const { dark } = this.editor.props;
-    const theme = this.editor.props.theme || (dark ? darkTheme : lightTheme);
+    const theme = this.editor.props.colorTheme || (dark ? darkTheme : lightTheme);
 
     const children = this.component({
       theme,

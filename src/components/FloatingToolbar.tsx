@@ -185,7 +185,7 @@ const Wrapper = styled.div<{
   will-change: opacity, transform;
   padding: 8px 16px;
   position: absolute;
-  z-index: ${props => props.theme.zIndex + 100};
+  z-index: 99999;
   opacity: 0;
   background-color: ${props => props.theme.toolbarBackground};
   border-radius: 4px;
