@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledEditor = styled("div")<{
+  raw: boolean;
   rtl: boolean;
   readOnly?: boolean;
   readOnlyWriteCheckboxes?: boolean;
@@ -14,6 +15,10 @@ export const StyledEditor = styled("div")<{
   width: 100%;
 
   .ProseMirror {
+    display: ${props => (props.raw ? "none" : "block")};
+  }
+
+  .ProseMirror, .markdown {
     position: relative;
     outline: none;
     word-wrap: break-word;
@@ -22,6 +27,13 @@ export const StyledEditor = styled("div")<{
     -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none;
     font-feature-settings: "liga" 0; /* the above doesn't seem to work in Edge */
+  }
+
+  .markdown {
+    color: ${props => props.theme.markdownText};
+    line-height: 1.5em;
+    background: unset;
+    border: none;
   }
 
   pre {

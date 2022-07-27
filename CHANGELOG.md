@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- raw markdown view
+- markdownText theme prop
+- publish workflow
+- onContextMenu Editor prop
+
+### Changed
+- scope added to package name
+- tsconfig lib (es2018 --> esnext)
 
 ## [11.22.0] - 2022-07-11
 ### Added

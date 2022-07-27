@@ -65,6 +65,7 @@ export const base = {
   noticeWarningText: colors.white,
 
   toolbarItemSelected: colors.primary,
+  markdownText: colors.lightBlack,
 };
 
 export const light = {
