@@ -34,6 +34,39 @@ Default.args = {
 Just an easy to use **Markdown** editor with \`slash commands\``,
 };
 
+export const Raw = Template.bind({});
+Raw.args = {
+  raw: true,
+  value: `# Raw Markdown
+
+\\
+> This view is ideal for copying lists
+
+\\
+Serializes **prose-mirror's** markdown schema into regular markdown.
+
+Removes extra newlines, backslashes, and whitespace.
+
+\\
+* unordered
+* unordered again
+  * unordered nested
+    * unordered deep
+* final unordered
+
+\\
+
+1. ordered
+2. ordered again
+
+
+    1. ordered nested
+
+
+        1. ordered deep
+3. final ordered`,
+};
+
 export const Emoji = Template.bind({});
 Emoji.args = {
   defaultValue: `# Emoji
@@ -154,7 +187,7 @@ export const ReadOnly = Template.bind({});
 ReadOnly.args = {
   readOnly: true,
   defaultValue: `# Read Only
-  
+
 The content of this editor cannot be edited`,
 };
 
@@ -187,7 +220,7 @@ Persisted.args = {
   defaultValue:
     localStorage.getItem("saved") ||
     `# Persisted
-  
+
 The contents of this editor are persisted to local storage on change (edit and reload)`,
   onChange: debounce(value => {
     const text = value();
@@ -211,7 +244,7 @@ export const Focused = Template.bind({});
 Focused.args = {
   autoFocus: true,
   defaultValue: `# Focused
-  
+
   This editor starts in focus`,
 };
 

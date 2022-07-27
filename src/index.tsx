@@ -121,6 +121,7 @@ export type Props = {
     | "emoji"
   )[];
   autoFocus?: boolean;
+  raw?: boolean;
   readOnly?: boolean;
   readOnlyWriteCheckboxes?: boolean;
   dictionary?: Partial<typeof baseDictionary>;
@@ -148,6 +149,7 @@ export type Props = {
   onHoverLink?: (event: MouseEvent) => boolean;
   onClickHashtag?: (tag: string, event: MouseEvent) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  onContextMenu?: (event: React.MouseEvent<HTMLDivElement>) => void;
   embeds: EmbedDescriptor[];
   onShowToast?: (message: string, code: ToastType) => void;
   tooltip: typeof React.Component | React.FC<any>;
@@ -178,6 +180,9 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
       // no default behavior
     },
     onImageUploadStop: () => {
+      // no default behavior
+    },
+    onContextMenu: () => {
       // no default behavior
     },
     onClickLink: href => {
@@ -603,7 +608,15 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
   };
 
   value = (): string => {
-    return this.serializer.serialize(this.view.state.doc);
+    return this.serializer?.serialize(this.view.state.doc);
+  };
+
+  /**
+   * Serializes prose-mirror's markdown schema into regular markdown.
+   * Removes extra newlines, backslashes, and whitespace.
+   */
+  markdownValue = (): string => {
+    return this.value()?.replaceAll(/(\n{2}(\s{3})+\n|\n{2}|\\\n{1,2})/g, "\n");
   };
 
   handleChange = () => {
@@ -734,18 +747,21 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
   render() {
     const {
       dir,
+      raw,
       readOnly,
       readOnlyWriteCheckboxes,
       style,
       tooltip,
       className,
       onKeyDown,
+      onContextMenu,
     } = this.props;
     const { isRTL } = this.state;
     const dictionary = this.dictionary(this.props.dictionary);
 
     return (
       <Flex
+        onContextMenu={onContextMenu}
         onKeyDown={onKeyDown}
         style={style}
         className={className}
@@ -757,13 +773,16 @@ class RichMarkdownEditor extends React.PureComponent<Props, State> {
         <ThemeProvider theme={this.theme()}>
           <React.Fragment>
             <StyledEditor
+              raw={raw}
               dir={dir}
               rtl={isRTL}
               readOnly={readOnly}
               readOnlyWriteCheckboxes={readOnlyWriteCheckboxes}
               ref={ref => (this.element = ref)}
-            />
-            {!readOnly && this.view && (
+            >
+              {raw && <pre className="markdown">{this.markdownValue()}</pre>}
+            </StyledEditor>
+            {!readOnly && !raw && this.view && (
               <React.Fragment>
                 <SelectionToolbar
                   view={this.view}
